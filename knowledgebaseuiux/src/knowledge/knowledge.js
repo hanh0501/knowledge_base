@@ -27,6 +27,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import Fab from '@mui/material/Fab';
 import HistoryIcon from '@mui/icons-material/History';
 import AddIcon from '@mui/icons-material/Add';
+import Item from '@mui/material/ListItem';
+import Grid from '@mui/material/Grid';
+import Badge from '@mui/material/Badge';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const drawerWidth = 240;
@@ -109,7 +117,7 @@ function Knowledge() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} >
       <CssBaseline />
       <AppBar style={StyleApply.Customer} position="fixed" open={open}>
         <Toolbar >
@@ -123,28 +131,83 @@ function Knowledge() {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon className="menuicon1"/>
           </IconButton>
-          <Typography color="black" variant="h6" noWrap component="div">
-          Customer Name
-          </Typography>
-          <Toolbar>
-            <Fab size="small" color="primary" aria-label="add">
+          <Box  sx={{ flexGrow: 1 }}>
+            <Grid justifyContent="flex-start" alignItems="center" direction="row" container>
+            <Grid>
+              <Item>
+                <Typography  color="black" fontSize="15pt" noWrap component="div">
+                Customer Name
+                </Typography>
+              </Item>
+            </Grid>
+            <Grid  >
+              <Item>
+                <Fab size="small" color="primary" aria-label="add">
                 <AddIcon />
-            </Fab>
-            <HistoryIcon style={StyleApply.DashboardIcon}/>
-          </Toolbar>
+                </Fab>
+              </Item>
+            </Grid>
+            <Grid  >
+              <Item>
+                <HistoryIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+            <Grid   >
+              <Item>
+                <SearchIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+          </Grid>
+          </Box>
+          <Box >
+            <Grid justifyContent="flex-start" alignItems="center" direction="row" container>
+            <Grid>
+              <Item>
+                <Badge badgeContent={4} color="warning">
+                    <NotificationsNoneIcon color="action" />
+                </Badge>
+              </Item>
+            </Grid>
+            <Grid  >
+              <Item>
+                <SettingsIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+            <Grid  >
+              <Item>
+                <HelpOutlineIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+            <Grid   >
+              <Item>
+                <AccountCircleIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+            <Grid   >
+              <Item>
+                <LogoutIcon style={StyleApply.MenuIcon}/>
+              </Item>
+            </Grid>
+          </Grid>
+          </Box>
+          
         </Toolbar>
         
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+        <DrawerHeader className="menutopbar">
+        <Typography style={StyleApply.Hanbiro}>
+          Hanbiro 
+          </Typography>
+          <Typography  style={StyleApply.CRM}>CRM</Typography>
           <IconButton onClick={handleDrawerClose}>
-          <MenuIcon />
+          <MenuIcon className="menuicon2"/>
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List className="menutobottompbar">
           {['Dashboard', 'My Work', 'Desk', 'Customer', 'Product', 'Demo Page', 'Favourites', 'My Works'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
@@ -185,7 +248,7 @@ function Knowledge() {
           ))}
         </List>        
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      {/* <Box >
         <DrawerHeader />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
@@ -214,7 +277,7 @@ function Knowledge() {
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
-      </Box>
+      </Box> */}
     </Box>
   );
 }
@@ -247,6 +310,22 @@ const StyleApply = {
     Customer:{
         background: "white",
      },
+    MenuIcon:{
+      color: "black",
+    },
+    Hanbiro:{
+      color: "#FFF3E0",
+      fontSize: 25,
+      fontWeight: 700,
+      
+    },
+    CRM:{
+      color: "white",
+      marginRight: 30,
+      fontSize: 10,
+      paddingTop: 9,
+    },
+
 }
 
 
