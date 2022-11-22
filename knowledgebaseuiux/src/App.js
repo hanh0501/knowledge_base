@@ -1,5 +1,4 @@
 import logo from './logo.svg';
-import './App.css';
 import Knowledge from './knowledge/knowledge';
 
 function App() {
