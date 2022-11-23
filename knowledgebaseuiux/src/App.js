@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import Knowledge from './knowledge/knowledge';
 
 function App() {

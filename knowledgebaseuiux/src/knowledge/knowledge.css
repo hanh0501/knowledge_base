@@ -33,19 +33,19 @@
 .leftcorner{
     display: flex;
     column-gap: 10px;
+    margin-top: 05px;
 }
 
 
 .endButton{
-    margin-top: 2px;
     border: solid #E1E5ED 1px;
-    width: 35px!important;
-    height: 35px!important;
+    width: 45px!important;
+    height: 40px!important;
     border-radius: 6px;
 }
 
 .StarIcon{
-    margin-top: 2px;
+    margin-top: 8px;
     color: #BFBFBF;
 }
 
@@ -57,10 +57,12 @@
 .AddIcon{
     margin-top: 2px;
     border: solid #E1E5ED 1px;
-    width: 35px!important;
-    height: 35px!important;
+    width: 45px!important;
+    height: 40px!important;
     border-radius: 6px;
     padding: 5px;
+    background: #007BFF;
+    color: white;
 }
 
 .CachedIcon,
@@ -68,12 +70,21 @@
 .WidgetsIcon{
     margin-top: 2px;
     border: solid #E1E5ED 1px;
-    width: 35px!important;
-    height: 35px!important;
+    width: 45px!important;
+    height: 40px!important;
     border-radius: 6px;
     padding: 5px;
 }
 
 .SearchIconWrapper{
     border: solid #E1E5ED 1px;
+}
+
+.required{
+    text-align: end;
+    color: black;
+}
+
+.asterisk{
+    color: red;
 }

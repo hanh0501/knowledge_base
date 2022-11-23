@@ -35,7 +35,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Popover from '@mui/material/Popover';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -55,8 +54,27 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import FormHelperText from '@mui/material/FormHelperText';
+import Tooltip from '@mui/material/Tooltip';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const ProtitleNew = (params) => {
   return (
@@ -297,91 +315,6 @@ function Knowledge() {
     setOpen(false);
   };
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const Appear = Boolean(anchorEl);
-
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
-
-  const handlePopoverOpen2 = (event) => {
-    setAnchorEl2(event.currentTarget);
-  };
-
-  const handlePopoverClose2 = () => {
-    setAnchorEl2(null);
-  };
-
-  const Appear2 = Boolean(anchorEl2);
-
-  const [anchorEl3, setAnchorEl3] = React.useState(null);
-
-  const handlePopoverOpen3 = (event) => {
-    setAnchorEl3(event.currentTarget);
-  };
-
-  const handlePopoverClose3 = () => {
-    setAnchorEl3(null);
-  };
-
-  const Appear3 = Boolean(anchorEl3);
-
-  const [anchorEl4, setAnchorEl4] = React.useState(null);
-
-  const handlePopoverOpen4 = (event) => {
-    setAnchorEl4(event.currentTarget);
-  };
-
-  const handlePopoverClose4 = () => {
-    setAnchorEl4(null);
-  };
-
-  const Appear4 = Boolean(anchorEl4);
-
-  const [anchorEl5, setAnchorEl5] = React.useState(null);
-
-  const handlePopoverOpen5 = (event) => {
-    setAnchorEl5(event.currentTarget);
-  };
-
-  const handlePopoverClose5 = () => {
-    setAnchorEl5(null);
-  };
-
-  const Appear5 = Boolean(anchorEl5);
-
-  const [anchorEl6, setAnchorEl6] = React.useState(null);
-
-  const handlePopoverOpen6 = (event) => {
-    setAnchorEl6(event.currentTarget);
-  };
-
-  const handlePopoverClose6 = () => {
-    setAnchorEl6(null);
-  };
-
-  const Appear6 = Boolean(anchorEl6);
-
-  const [anchorEl7, setAnchorEl7] = React.useState(null);
-
-  const handlePopoverOpen7 = (event) => {
-    setAnchorEl7(event.currentTarget);
-  };
-
-  const handlePopoverClose7 = () => {
-    setAnchorEl7(null);
-  };
-
-  const Appear7 = Boolean(anchorEl7);
-
-
   const [anchorEl8, setAnchorEl8] = React.useState(null);
   const ClicktoDrop = Boolean(anchorEl8);
   const handleClick = (event) => {
@@ -427,19 +360,8 @@ function Knowledge() {
     setValue2(event.target.value);
   };
 
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('lg');
-
-  const handleMaxWidthChange = (event) => {
-    setMaxWidth(
-      // @ts-expect-error autofill of arbitrary value is not handled.
-      event.target.value,
-    );
-  };
-
-  const handleFullWidthChange = (event) => {
-    setFullWidth(event.target.checked);
-  };
+  const [fullWidth] = React.useState(true);
+  const [maxWidth] = React.useState('lg');
 
   const [checked, setChecked] = React.useState(true);
 
@@ -447,9 +369,17 @@ function Knowledge() {
     setChecked(event.target.checked);
   };
 
+  const [Category, setCategory] = React.useState('');
 
+  const handleChangeSelectCategory = (event) => {
+    setCategory(event.target.value);
+  };
 
+  const [Template, setTemplate] = React.useState('');
 
+  const handleChangeSelectTemplate = (event) => {
+    setTemplate(event.target.value);
+  };
 
 
   return (
@@ -480,71 +410,25 @@ function Knowledge() {
             </Grid>
             <Grid  >
               <Item>
-                <Fab size="small" color="primary" aria-label="add">
-                <AddIcon />
-                </Fab>
+                <Tooltip title="New" arrow>
+                  <Fab size="small" color="primary" aria-label="add">
+                  <AddIcon />
+                  </Fab>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid  >
               <Item>
-                <HistoryIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen}
-                onMouseLeave={handlePopoverClose}
-                />
-              <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear}
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>Recent</Typography>
-              </Popover>
+                <Tooltip title="Recent" arrow>
+                  <HistoryIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item>
-                <SearchIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear2 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen2}
-                onMouseLeave={handlePopoverClose2}
-                />
-                <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear2}
-                anchorEl={anchorEl2}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose2}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>History</Typography>
-              </Popover>
+                <Tooltip title="Search" arrow>
+                  <SearchIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
           </Grid>
@@ -553,160 +437,39 @@ function Knowledge() {
             <Grid container>
             <Grid>
               <Item>
-                <Badge badgeContent={4} color="warning">
-                    <NotificationsNoneIcon color="action"
-                aria-owns={Appear3 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen3}
-                onMouseLeave={handlePopoverClose3}
-                />
-                <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear3}
-                anchorEl={anchorEl3}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose3}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>Notification</Typography>
-              </Popover>
-                </Badge>
+                <Tooltip title="Notification" arrow>
+                  <Badge badgeContent={4} color="warning">
+                      <NotificationsNoneIcon color="action"/>
+                  </Badge>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid  > 
               <Item>
-                <SettingsIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear4 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen4}
-                onMouseLeave={handlePopoverClose4}
-                />
-                <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear4}
-                anchorEl={anchorEl4}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose4}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>Setting</Typography>
-              </Popover>
+                <Tooltip title="Setting" arrow>
+                  <SettingsIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid  >
               <Item>
-                <HelpOutlineIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear5 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen5}
-                onMouseLeave={handlePopoverClose5}
-                />
-                <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear5}
-                anchorEl={anchorEl5}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose5}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>Help</Typography>
-              </Popover>
+                <Tooltip title="Help" arrow>
+                    <HelpOutlineIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item>
-                <AccountCircleIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear6 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen6}
-                onMouseLeave={handlePopoverClose6}
-                />
-                <Popover 
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear6}
-                anchorEl={anchorEl6}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose6}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>User</Typography>
-              </Popover>
+                <Tooltip title="User" arrow>
+                    <AccountCircleIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item className="appear7">
-                <LogoutIcon style={StyleApply.MenuIcon}
-                aria-owns={Appear7 ? 'mouse-over-popover' : undefined}
-                aria-haspopup="true"
-                onMouseEnter={handlePopoverOpen7}
-                onMouseLeave={handlePopoverClose7}
-                />
-                <Popover 
-                
-                id="mouse-over-popover"
-                sx={{
-                  pointerEvents: 'none',
-                }}
-                open={Appear7}
-                anchorEl={anchorEl7}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-                
-                onClose={handlePopoverClose7}
-                disableRestoreFocus
-              >
-                <Typography  sx={{ p: 0.5}}>Logout</Typography>
-              </Popover>
+                <Tooltip title="Logout" arrow>
+                    <LogoutIcon style={StyleApply.MenuIcon}/>
+                </Tooltip>
               </Item>
             </Grid>
             </Grid>
@@ -791,7 +554,7 @@ function Knowledge() {
             <Grid container >
               <Grid  xs={4} display="flex" className="leftcorner">
                 <StarIcon className="StarIcon"/>
-                <Typography color="black" fontSize="16pt" fontWeight="500" noWrap component="div">
+                <Typography marginTop="5px" color="black" fontSize="16pt" fontWeight="500" noWrap component="div">
                 KNOWLEDGE BASE
                 </Typography>
                 <KeyboardArrowDownIcon className="endButton"
@@ -801,10 +564,8 @@ function Knowledge() {
                 aria-expanded={ClicktoDrop ? 'true' : undefined}
                 variant="contained"
                 disableElevation
-                onClick={handleClick}
-              >
-                
-              </KeyboardArrowDownIcon>
+                onClick={handleClick}>
+                </KeyboardArrowDownIcon>
               <StyledMenu
                 id="demo-customized-menu"
                 MenuListProps={{
@@ -856,10 +617,12 @@ function Knowledge() {
                         ref={descriptionElementRef}
                         tabIndex={-1}
                       >
+                        <Typography className="required">
+                        <span className="asterisk" >*</span> is required</Typography>
                         <Grid container >
                           <Grid  xs={12} display="flex" >
                             <FormControl>
-                              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+                              <FormLabel id="demo-radio-buttons-group-label">Type<span className="asterisk" >*</span></FormLabel>
                               <RadioGroup
                                 row
                                 aria-labelledby="demo-controlled-radio-buttons-group"
@@ -879,6 +642,25 @@ function Knowledge() {
                             </FormControl>
                           </Grid>
                         </Grid>
+                        <br/>
+                        <Grid container >
+                          <Grid  xs={12} display="flex" >
+                          <FormControl fullWidth>
+                            <FormLabel component="legend">Category<span className="asterisk" >*</span></FormLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={Category}
+                              onChange={handleChangeSelectCategory}
+                            >
+                              <MenuItem value={10}>Folder 11111111111111111111...</MenuItem>
+                              <MenuItem value={20}>Folder 2</MenuItem>
+                            </Select>
+                            <FormHelperText>Type or Click to select a category</FormHelperText>
+                          </FormControl>
+                          </Grid>
+                        </Grid>
+                        <br/>
                         <Grid container >
                           <Grid  xs={12} display="flex" >
                             <FormControl>
@@ -902,6 +684,7 @@ function Knowledge() {
                             </FormControl>
                           </Grid>
                         </Grid>
+                        <br/>
                         <Grid container >
                           <Grid  xs={12} display="flex" >
                             <FormControl component="fieldset" variant="standard">
@@ -910,6 +693,40 @@ function Knowledge() {
                             </FormControl>
                           </Grid>
                         </Grid>
+                        <br/>
+                        
+                        <br/>
+                        <Box >
+                          <FormLabel component="legend">Subject<span className="asterisk" >*</span></FormLabel>
+                          <TextField fullWidth/>
+                        </Box>
+                        <br/>
+                        <Grid container >
+                          <Grid  xs={12} display="flex" >
+                          <FormControl fullWidth>
+                            <FormLabel component="legend">Content<span className="asterisk" >*</span></FormLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value={Template}
+                              onChange={handleChangeSelectTemplate}                              
+                            >
+                              <MenuItem value={10}>Select a template</MenuItem>
+                            </Select>
+                            <FormHelperText>Select a template</FormHelperText>
+                          </FormControl>
+                          </Grid>
+                        </Grid>
+                        <br/>
+                        <Grid container >
+                          <Grid  xs={12} display="flex" >
+                          <FormControl fullWidth>
+                            <FormLabel component="legend">Editor area</FormLabel>
+                            
+                          </FormControl>
+                          </Grid>
+                        </Grid>
+                        
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -927,15 +744,24 @@ function Knowledge() {
           <Box  sx={{ flexGrow: 1,}}>
             <Grid container >
               <Grid  xs={12} display="flex" className="rightcorner">
-              <Search className="SearchIconWrapper">
-                <SearchIconWrapper >
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Subject"
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </Search>
+                <Search className="SearchIconWrapper">
+                  <SearchIconWrapper >
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Subject"
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                  <KeyboardArrowDownIcon 
+                    id="demo-customized-button"
+                    aria-controls={ClicktoDrop ? 'demo-customized-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={ClicktoDrop ? 'true' : undefined}
+                    variant="contained"
+                    disableElevation
+                    onClick={handleClick}>
+                  </KeyboardArrowDownIcon>
+                </Search>
                 <WidgetsIcon className="WidgetsIcon "/>
               </Grid>
             </Grid>
@@ -1111,8 +937,6 @@ const StySpecification = {
 
 
 }
-
-
 
 
 export default Knowledge
