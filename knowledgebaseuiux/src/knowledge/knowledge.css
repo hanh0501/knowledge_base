@@ -1,3 +1,4 @@
+
 .menutobottompbar{
     background-color: #343A40;
     height: 100%;
@@ -88,3 +89,48 @@
 .asterisk{
     color: red;
 }
+
+.dragdrop{
+    height: 50px;
+    width: auto;
+    line-height: 2.0;
+    padding-left: 10px;
+    color: black;
+    background: #D1ECF1;
+    border-radius: 12px;
+    padding-top: 8px;
+    margin: 24px!important;
+}
+
+.leftborder{
+    border: solid 1px  #E0E0E0;
+}
+
+.categories{
+    background: #F5F6FA;
+}
+
+.category{
+    width: 25px!important;
+    height: 25px!important;
+    margin-left: 10px;
+}
+
+.defaultCollapseIcon{
+    width: 25px!important;
+    height: 25px!important;
+    border: solid 1px black;
+    margin-right: 5px;
+}
+
+.defaultExpandIcon{
+    width: 25px!important;
+    height: 25px!important;
+    border: solid 1px black;
+    margin: 0 5px;
+}
+
+.Icon{
+    margin: 5px;
+}
+

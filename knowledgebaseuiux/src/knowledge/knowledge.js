@@ -59,15 +59,21 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import Tooltip from '@mui/material/Tooltip';
-
-
-
-
-
-
-
-
-
+import Autocomplete from '@mui/material/Autocomplete';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TreeView from '@mui/lab/TreeView';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
+import { DataGrid } from '@mui/x-data-grid';
+import InfoIcon from '@mui/icons-material/Info';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 
@@ -266,9 +272,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
-
-
-
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'firstName', headerName: 'First name', width: 130 },
@@ -301,6 +304,9 @@ const rows = [
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
+
+
+
 
 
 
@@ -364,7 +370,6 @@ function Knowledge() {
   const [maxWidth] = React.useState('lg');
 
   const [checked, setChecked] = React.useState(true);
-
   const handleChangeActive = (event) => {
     setChecked(event.target.checked);
   };
@@ -381,6 +386,48 @@ function Knowledge() {
     setTemplate(event.target.value);
   };
 
+  const label = { inputProps: { 'aria-label': 'Switch demo' } };
+
+
+  const columns = [
+    { field: 'id', headerName: 'No', width: 15},
+    { field: 'subject', headerName: 'Subject', width: 250 },
+    { field: 'created', headerName: 'Created On',type: 'date', width: 150 },
+    { field: 'available', headerName: 'Available For', width: 150 },
+    { field: 'display', headerName: 'Display To', width: 150 },
+    {
+      field: 'viewed',
+      headerName: 'Viewed',
+      type: 'number',
+      width: 130,
+    },
+    {
+      field: 'inserted',
+      headerName: 'Inserted',
+      type: 'number',
+      width: 130,
+    },
+    {
+      field: 'active',
+      headerName: 'Active',
+      width: 100,
+    },
+  ];
+  
+  const rows = [
+    { id: 1, subject: 'How to assess admin page?', created: '2020/12/01	', available: 'CS', display: 'Public', viewed: 35, inserted: 0 },
+    { id: 2, subject: 'How to assess admin page?', created: '2020/12/02', available: 'CS', display: 'Public', viewed: null, inserted: 1 },
+    { id: 3, subject: 'How to assess admin page?', created: '2020/12/03', available: 'CS', display: 'Public', viewed: 30, inserted: 2 },
+    { id: 4, subject: 'How to assess admin page?', created: '2020/12/04', available: 'CS', display: 'Public', viewed: 40, inserted: 3 },
+    { id: 5, subject: 'How to assess admin page?', created: '2020/12/05', available: 'CS', display: 'Public', viewed: null, inserted: 4 },
+    { id: 6, subject: 'How to assess admin page?', created: '2020/12/06', available: 'CS', display: 'Public', viewed: null, inserted: 5 },
+    { id: 7, subject: 'How to assess admin page?', created: '2020/12/07', available: 'CS', display: 'Public', viewed: 50, inserted: 6 },
+
+  
+  
+  
+  
+  ];
 
   return (
     <Box sx={{ display: 'flex' }} >
@@ -530,23 +577,7 @@ function Knowledge() {
           ))}
         </List>        
       </Drawer>
-      {/* <div  style={StySpecification.TableWrap}>
-              <div style={StySpecification.ListProduct}>
-
-                {ProtitleNew({
-                  classNameWrapper: StySpecification.InfPro,
-                  classNameItem: StySpecification.ProTitleLeft,
-                  PadPro: StySpecification.PadPro,
-                  Title: "hi",
-                  Core: "CPU",
-                  G: "Memory",
-                  SD: "Storage",
-                  SG: "Traffic 전송량(월)",
-                  원: "서비스비용(월)"
-
-                })}
-              </div>
-            </div> */}
+      
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <br/>
         <DrawerHeader />
@@ -694,7 +725,27 @@ function Knowledge() {
                           </Grid>
                         </Grid>
                         <br/>
-                        
+                        <Grid container >
+                          <Grid  xs={12} display="flex" >
+                            <FormControl component="fieldset" variant="standard" fullWidth>
+                              <FormLabel component="legend">Tag</FormLabel>
+                              <Autocomplete
+                              multiple
+                              id="tags-outlined"
+                              options={top100Films}
+                              getOptionLabel={(option) => option.title}
+                              defaultValue={[top100Films[1]]}
+                              filterSelectedOptions
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  placeholder="Type or Click to select a tag"
+                                />
+                              )}
+                            />
+                            </FormControl>
+                          </Grid>
+                        </Grid>
                         <br/>
                         <Box >
                           <FormLabel component="legend">Subject<span className="asterisk" >*</span></FormLabel>
@@ -722,11 +773,9 @@ function Knowledge() {
                           <Grid  xs={12} display="flex" >
                           <FormControl fullWidth>
                             <FormLabel component="legend">Editor area</FormLabel>
-                            
                           </FormControl>
                           </Grid>
                         </Grid>
-                        
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -736,7 +785,6 @@ function Knowledge() {
                 </Dialog>
                 <CachedIcon className="CachedIcon"/>
                 <BorderAllIcon className="BorderAllIcon "/>
-
               </Grid>
             </Grid>
           </Box>
@@ -766,34 +814,61 @@ function Knowledge() {
               </Grid>
             </Grid>
           </Box>
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-            enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-            imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-            Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-            Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-            nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-            leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-            feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-            sapien faucibus et molestie ac.
-          </Typography>
-          <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-            eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-            neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-            tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-            sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-            tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-            gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-            tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-            eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-            posuere sollicitudin aliquam ultrices sagittis orci a.
-          </Typography>
-
+          <br/>
+          <Box  >
+            <Grid container >
+                <Grid  xs={3.7} className="leftborder">
+                  <TableContainer >
+                    <Table aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell className="categories"><Typography >Categories and Folders</Typography></TableCell>
+                        </TableRow>
+                        <TableRow>
+                          
+                          <Typography className="dragdrop">Drag&Drop으로 폴더를 이동할 수 있습니다   <InfoIcon style={StyleApply.InfoIcon}/></Typography>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TreeView className="Icon"
+                          aria-label="file system navigator"
+                          defaultCollapseIcon={<RemoveIcon className="defaultCollapseIcon"/>}
+                          defaultExpandIcon={<AddIcon  className="defaultExpandIcon"/>}
+                          >
+                          <TreeItem nodeId="1" label="Category 1">
+                            <TreeItem nodeId="a" label="Folder 1.1" />
+                            <TreeItem nodeId="b" label="Folder 2.1" />
+                          </TreeItem>
+                          <br/>
+                          <TreeItem nodeId="2" label="Category 2(10)">
+                          <TreeItem nodeId="2a" label="Folder 2.1" />
+                            <TreeItem nodeId="2b" label="Folder 2.2" />
+                          </TreeItem>
+                        </TreeView>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                  <br/>
+                  <AddIcon className="AddIcon category" 
+                
+                />            
+                </Grid>
+                <Grid  xs={0.3} ></Grid>
+                <Grid xs={8} display="flex" >
+                <div style={{ height: 400, width: '100%' }}>
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={6}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                  />
+                  <Switch {...label} defaultChecked/>
+                </div>
+                </Grid>
+            </Grid>
+              
+          </Box>
           
       </Box>
     </Box>
@@ -830,6 +905,10 @@ const StyleApply = {
      },
     MenuIcon:{
       color: "black",
+    },
+    InfoIcon:{
+      color: "black",
+      paddingTop: 0,
     },
     Hanbiro:{
       color: "#FFF3E0",
@@ -908,6 +987,7 @@ const StySpecification = {
   ListProduct: {
     display: "flex",
     fontSize: "110%",
+    border: "solid 1px black",
     
   },
   PadPro: {
@@ -937,6 +1017,12 @@ const StySpecification = {
 
 
 }
+
+const top100Films = [
+  { title: 'Email'},
+  { title: 'Call'},
+  { title: 'SMS'},
+];
 
 
 export default Knowledge
