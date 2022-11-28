@@ -134,3 +134,8 @@
     margin: 5px;
 }
 
+
+.SwipeableDrawer{
+    color: #007BFF;
+    z-index: 10000000000;
+}

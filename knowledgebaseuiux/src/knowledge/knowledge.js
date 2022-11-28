@@ -59,6 +59,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
 import Autocomplete from '@mui/material/Autocomplete';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -70,36 +71,26 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { DataGrid } from '@mui/x-data-grid';
 import InfoIcon from '@mui/icons-material/Info';
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import ExportIcon from '@mui/icons-material/AddBox';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useDemoData } from '@mui/x-data-grid-generator';
+import Pagination from '@mui/material/Pagination';
+import {
+  DataGrid,
+  gridPageCountSelector,
+  gridPageSelector,
+  useGridApiContext,
+  useGridSelector,
+} from '@mui/x-data-grid';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import Paper from '@mui/material/Paper';
+import CloseIcon from '@mui/icons-material/Close';
+import PropTypes from 'prop-types';
 
 
-
-
-
-
-
-
-const ProtitleNew = (params) => {
-  return (
-
-    <div style={params.classNameWrapper}>
-      <div style={params.classNameItem}>
-        <text style={StySpecification.ColorText}>{params.Title} </text>
-      </div>
-      <div style={params.PadPro}>
-        <p><text>{params.Core}</text></p>
-        <p><text>{params.G}</text></p>
-        <p><text>{params.SD}</text></p>
-        <p><text>{params.SG}</text></p>
-        <p><text>{params.원}</text></p>
-      </div>
-    </div>
-
-  )
-}
 
 const drawerWidth = 240;
 
@@ -270,40 +261,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+function CustomPagination() {
+  const apiRef = useGridApiContext();
+  const page = useGridSelector(apiRef, gridPageSelector);
+  const pageCount = useGridSelector(apiRef, gridPageCountSelector);
+
+  return (
+    <Pagination
+      color="primary"
+      count={pageCount}
+      page={page + 1}
+      onChange={(event, value) => apiRef.current.setPage(value - 1)}
+    />
+  );
+}
 
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
 
 
@@ -332,6 +305,28 @@ function Knowledge() {
 
 
 
+  const [OpenDialog3, setOpenDialog3] = React.useState(false);
+  const [scroll3, setScroll3] = React.useState('paper');
+
+  const handleClickOpen3 = (scrollType) => () => {
+    setOpenDialog3(true);
+    setScroll3(scrollType);
+  };
+
+  const handleCloseDialog3 = () => {
+    setOpenDialog3(false);
+  };
+
+  const descriptionElementRef3 = React.useRef(null);
+  React.useEffect(() => {
+    if (OpenDialog3) {
+      const { current: descriptionElement3 } = descriptionElementRef3;
+      if (descriptionElement3 !== null) {
+        descriptionElement3.focus();
+      }
+    }
+  }, [OpenDialog3]);
+
   const [OpenDialog, setOpenDialog] = React.useState(false);
   const [scroll, setScroll] = React.useState('paper');
 
@@ -353,6 +348,11 @@ function Knowledge() {
       }
     }
   }, [OpenDialog]);
+
+
+
+
+
 
   const [value, setValue] = React.useState('Article');
 
@@ -390,8 +390,8 @@ function Knowledge() {
 
 
   const columns = [
-    { field: 'id', headerName: 'No', width: 15},
-    { field: 'subject', headerName: 'Subject', width: 250 },
+    { field: 'id', headerName: 'No', width: 20},
+    { field: 'subject', headerName: 'Subject', width: 230},
     { field: 'created', headerName: 'Created On',type: 'date', width: 150 },
     { field: 'available', headerName: 'Available For', width: 150 },
     { field: 'display', headerName: 'Display To', width: 150 },
@@ -407,27 +407,33 @@ function Knowledge() {
       type: 'number',
       width: 130,
     },
+
     {
       field: 'active',
       headerName: 'Active',
       width: 100,
+      type: 'boolean',
+      editable: true
     },
+
   ];
-  
+
   const rows = [
-    { id: 1, subject: 'How to assess admin page?', created: '2020/12/01	', available: 'CS', display: 'Public', viewed: 35, inserted: 0 },
+    { id: 1, subject: 'How to assess admin page?', created: '2020/12/01	', available: 'CS', display: 'Public', viewed: 35, inserted: 0},
     { id: 2, subject: 'How to assess admin page?', created: '2020/12/02', available: 'CS', display: 'Public', viewed: null, inserted: 1 },
     { id: 3, subject: 'How to assess admin page?', created: '2020/12/03', available: 'CS', display: 'Public', viewed: 30, inserted: 2 },
     { id: 4, subject: 'How to assess admin page?', created: '2020/12/04', available: 'CS', display: 'Public', viewed: 40, inserted: 3 },
     { id: 5, subject: 'How to assess admin page?', created: '2020/12/05', available: 'CS', display: 'Public', viewed: null, inserted: 4 },
     { id: 6, subject: 'How to assess admin page?', created: '2020/12/06', available: 'CS', display: 'Public', viewed: null, inserted: 5 },
     { id: 7, subject: 'How to assess admin page?', created: '2020/12/07', available: 'CS', display: 'Public', viewed: 50, inserted: 6 },
+  ];
+
+
+
+
+
 
   
-  
-  
-  
-  ];
 
   return (
     <Box sx={{ display: 'flex' }} >
@@ -457,7 +463,7 @@ function Knowledge() {
             </Grid>
             <Grid  >
               <Item>
-                <Tooltip title="New" arrow>
+                <Tooltip title="New" arrow TransitionComponent={Zoom}>
                   <Fab size="small" color="primary" aria-label="add">
                   <AddIcon />
                   </Fab>
@@ -466,14 +472,14 @@ function Knowledge() {
             </Grid>
             <Grid  >
               <Item>
-                <Tooltip title="Recent" arrow>
+                <Tooltip title="Recent" arrow TransitionComponent={Zoom}>
                   <HistoryIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item>
-                <Tooltip title="Search" arrow>
+                <Tooltip title="Search" arrow TransitionComponent={Zoom}>
                   <SearchIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
@@ -484,7 +490,7 @@ function Knowledge() {
             <Grid container>
             <Grid>
               <Item>
-                <Tooltip title="Notification" arrow>
+                <Tooltip title="Notification" arrow TransitionComponent={Zoom}>
                   <Badge badgeContent={4} color="warning">
                       <NotificationsNoneIcon color="action"/>
                   </Badge>
@@ -493,28 +499,28 @@ function Knowledge() {
             </Grid>
             <Grid  > 
               <Item>
-                <Tooltip title="Setting" arrow>
+                <Tooltip title="Setting" arrow TransitionComponent={Zoom}>
                   <SettingsIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
             </Grid>
             <Grid  >
               <Item>
-                <Tooltip title="Help" arrow>
+                <Tooltip title="Help" arrow TransitionComponent={Zoom}>
                     <HelpOutlineIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item>
-                <Tooltip title="User" arrow>
+                <Tooltip title="User" arrow TransitionComponent={Zoom}>
                     <AccountCircleIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
             </Grid>
             <Grid   >
               <Item className="appear7">
-                <Tooltip title="Logout" arrow>
+                <Tooltip title="Logout" arrow TransitionComponent={Zoom}>
                     <LogoutIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
               </Item>
@@ -597,23 +603,23 @@ function Knowledge() {
                 disableElevation
                 onClick={handleClick}>
                 </KeyboardArrowDownIcon>
-              <StyledMenu
-                id="demo-customized-menu"
-                MenuListProps={{
-                  'aria-labelledby': 'demo-customized-button',
-                }}
-                anchorEl={anchorEl8}
-                open={ClicktoDrop}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left',
-                }}
-              >
+                <StyledMenu
+                  id="demo-customized-menu"
+                  MenuListProps={{
+                    'aria-labelledby': 'demo-customized-button',
+                  }}
+                  anchorEl={anchorEl8}
+                  open={ClicktoDrop}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                >
                 <MenuItem onClick={handleClose} disableRipple>
                   Ticket
                 </MenuItem>
@@ -630,22 +636,22 @@ function Knowledge() {
 
               <Grid  xs={8} display="flex" className="rightcorner">
                 <AddIcon className="AddIcon" 
-                onClick={handleClickOpen('paper')}
+                onClick={handleClickOpen3('paper')}
                 />
                 <Dialog
-                    open={OpenDialog}
-                    onClose={handleCloseDialog}
-                    scroll={scroll}
+                    open={OpenDialog3}
+                    onClose={handleCloseDialog3}
+                    scroll={scroll3}
                     aria-labelledby="scroll-dialog-title"
                     aria-describedby="scroll-dialog-description"
                     fullWidth={fullWidth}
                     maxWidth={maxWidth}
                   >
                     <DialogTitle id="scroll-dialog-title">Create Knowledge Base</DialogTitle>
-                    <DialogContent dividers={scroll === 'paper'}>
+                    <DialogContent dividers={scroll3 === 'paper'}>
                       <DialogContentText
                         id="scroll-dialog-description"
-                        ref={descriptionElementRef}
+                        ref={descriptionElementRef3}
                         tabIndex={-1}
                       >
                         <Typography className="required">
@@ -779,8 +785,8 @@ function Knowledge() {
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                      <Button onClick={handleCloseDialog}>Close</Button>
-                      <Button onClick={handleCloseDialog}>Save</Button>
+                      <Button onClick={handleCloseDialog3}>Close</Button>
+                      <Button onClick={handleCloseDialog3}>Save</Button>
                     </DialogActions>
                 </Dialog>
                 <CachedIcon className="CachedIcon"/>
@@ -826,7 +832,7 @@ function Knowledge() {
                         </TableRow>
                         <TableRow>
                           
-                          <Typography className="dragdrop">Drag&Drop으로 폴더를 이동할 수 있습니다   <InfoIcon style={StyleApply.InfoIcon}/></Typography>
+                          <Typography className="dragdrop">Drag&Drop으로 폴더를 이동할 수 있습니다<InfoIcon style={StyleApply.InfoIcon}/></Typography>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -849,21 +855,91 @@ function Knowledge() {
                     </Table>
                   </TableContainer>
                   <br/>
+                  <Tooltip title="Add New Category" arrow placement="right-start" TransitionComponent={Zoom}>
                   <AddIcon className="AddIcon category" 
-                
-                />            
+                  onClick={handleClickOpen('paper')}
+                  />
+                  </Tooltip>
+                <Dialog
+                  fullWidth={fullWidth}
+                  open={OpenDialog}
+                  onClose={handleCloseDialog}
+                  scroll={scroll}
+                  aria-labelledby="scroll-dialog-title"
+                  aria-describedby="scroll-dialog-description"
+                >
+                  <DialogTitle id="scroll-dialog-title">Add New Category</DialogTitle>
+                  <DialogContent dividers={scroll === 'paper'}>
+                    <DialogContentText
+                      id="scroll-dialog-description"
+                      ref={descriptionElementRef}
+                      tabIndex={-1}
+                    >
+                      <Box >
+                          <FormLabel component="legend">Name<span className="asterisk" >*</span></FormLabel>
+                          <TextField fullWidth/>
+                      </Box>
+                      <br/>
+                      <Box >
+                          <FormLabel component="legend">Description</FormLabel>
+                          <TextField fullWidth/>
+                      </Box>
+                      <br/>
+                      <Grid container >
+                          <Grid  xs={12} display="flex" >
+                            <FormControl>
+                              <FormLabel id="demo-radio-buttons-group-label">Display to</FormLabel>
+                              <RadioGroup
+                                column
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={value2}
+                                onChange={handleChange2}
+                              >
+                                <FormControlLabel 
+                                  value="Public" 
+                                  control={<Radio />} 
+                                  label="Public" />
+                                <FormControlLabel 
+                                  value="Private" 
+                                  control={<Radio />} 
+                                  label="Private" />
+                              </RadioGroup>
+                            </FormControl>
+                          </Grid>
+                        </Grid>
+                        <br/>
+                      <Grid container >
+                          <Grid  xs={12} display="flex" >
+                            <FormControl component="fieldset" variant="standard">
+                              <FormLabel component="legend">Active</FormLabel>
+                              <Switch checked={checked} onChange={handleChangeActive} inputProps={{ 'aria-label': 'controlled' }}/>
+                            </FormControl>
+                          </Grid>
+                        </Grid>
+                    </DialogContentText>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleCloseDialog}>Cancel</Button>
+                    <Button onClick={handleCloseDialog}>Save</Button>
+                  </DialogActions>
+                </Dialog>
+                          
                 </Grid>
                 <Grid  xs={0.3} ></Grid>
                 <Grid xs={8} display="flex" >
                 <div style={{ height: 400, width: '100%' }}>
-                  <DataGrid
+                  <DataGrid 
                     rows={rows}
                     columns={columns}
-                    pageSize={6}
-                    rowsPerPageOptions={[5]}
+                    pageSize={5}
+                    rowsPerPageOptions={[2]}
                     checkboxSelection
+                    components={{
+                      Pagination: CustomPagination,
+                    }}
+                    
                   />
-                  <Switch {...label} defaultChecked/>
                 </div>
                 </Grid>
             </Grid>
@@ -927,96 +1003,6 @@ const StyleApply = {
 
 }
 
-const StySpecification = {
-  StylesContainer: {
-    boxShadow: "0 0.375rem 1.5rem 0 rgb(140 152 164 / 13%)",
-    border: "1px solid #E7EAF3",
-    borderRadius: "8px",
-    padding: 20,
-    marginTop: 30,
-  },
-  StylesTitle: {
-    textAlign: "center",
-  },
-  Title: {
-    fontWeight: "bold",
-    marginTop: "20px",
-    marginBottom: "30px"
-  },
-  Text: {
-    fontWeight: 600,
-    fontSize: 20,
-    marginBottom: "30px"
-  },
-  ColorText: {
-    color: "white",
-  },
-  ProductTitle: {
-    background: "#393939",
-    fontWeight: "bold",
-    borderTopLeftRadius: "8px",
-    borderTopRightRadius: "8px",
-    paddingTop: 8,
-    paddingBottom: 8,
-
-  },
-  ProTitleLeft: {
-    fontWeight: 500,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  InfProduct: {
-    borderRadius: "8px",
-    width: "20%",
-    minWidth: "170px",
-    marginLeft: 20,
-    border: "1px solid #D7E5ED",
-    whiteSpace: "nowrap",
-
-  },
-  InfPro: {
-    visibility:"visible",
-    borderRadius: "8px",
-    width: "20%",
-    textAlign: "right",
-    fontWeight: 700,
-    whiteSpace: "nowrap",
-    minWidth: "130px",
-  },
-
-  ListProduct: {
-    display: "flex",
-    fontSize: "110%",
-    border: "solid 1px black",
-    
-  },
-  PadPro: {
-    paddingTop: 10,
-  },
-  Auto: {
-    backgroundColor: "lightblue",
-    width: "150px",
-    overflowX: "scroll",
-
-  },
-
-  TableScroll:{
-    position:"relative",
-    width: "100%",
-    margin:"auto",
-    overflow:"hidden",
-    
-    
-  },
-  TableWrap:{
-    width:"100%",
-    overflow:"auto",
-  },
-  
-
-
-
-}
 
 const top100Films = [
   { title: 'Email'},
