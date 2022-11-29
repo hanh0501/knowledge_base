@@ -68,13 +68,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TreeView from '@mui/lab/TreeView';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
+import TreeItem, { treeItemClasses } from '@mui/lab/TreeItem';
 import InfoIcon from '@mui/icons-material/Info';
-import ExportIcon from '@mui/icons-material/AddBox';
-import RemoveIcon from '@mui/icons-material/Remove';
-import { useDemoData } from '@mui/x-data-grid-generator';
 import Pagination from '@mui/material/Pagination';
 import {
   DataGrid,
@@ -83,12 +78,11 @@ import {
   useGridApiContext,
   useGridSelector,
 } from '@mui/x-data-grid';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Paper from '@mui/material/Paper';
-import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
+import Label from '@mui/icons-material/Label';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 
 
@@ -276,7 +270,79 @@ function CustomPagination() {
   );
 }
 
+const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  [`& .${treeItemClasses.content}`]: {
+    size: 20,
+    color: theme.palette.text.secondary,
+    borderTopLeftRadius: theme.spacing(2),
+    borderBottomLeftRadius: theme.spacing(2),
+    borderTopRightRadius: theme.spacing(2),
+    borderBottomRightRadius: theme.spacing(2),
+    paddingRight: theme.spacing(1),
+    fontWeight: theme.typography.fontWeightMedium,
+    '&.Mui-expanded': {
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
+      backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
+      color: 'var(--tree-view-color)',
+    },
+    [`& .${treeItemClasses.label}`]: {
+      fontWeight: 'inherit',
+      color: 'inherit',
+    },
+    },
+    [`& .${treeItemClasses.group}`]: {
+    marginLeft: 0,
+    [`& .${treeItemClasses.content}`]: {
+      paddingLeft: theme.spacing(2),
+    },
+  },
+}));
 
+function StyledTreeItem(props) {
+  const {
+    bgColor,
+    color,
+    labelIcon: LabelIcon,
+    labelInfo,
+    labelText,
+    ...other
+  } = props;
+
+  return (
+    <StyledTreeItemRoot
+      label={
+        <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
+          <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
+          <Typography variant="body2" sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
+            {labelText}
+          </Typography>
+          <Typography variant="caption" color="inherit">
+            {labelInfo}
+          </Typography>
+        </Box>
+      }
+      style={{
+        '--tree-view-color': color,
+        '--tree-view-bg-color': bgColor,
+      }}
+      {...other}
+    />
+  );
+}
+
+StyledTreeItem.propTypes = {
+  bgColor: PropTypes.string,
+  color: PropTypes.string,
+  labelIcon: PropTypes.elementType.isRequired,
+  labelInfo: PropTypes.string,
+  labelText: PropTypes.string.isRequired,
+};
 
 
 
@@ -391,7 +457,7 @@ function Knowledge() {
 
   const columns = [
     { field: 'id', headerName: 'No', width: 20},
-    { field: 'subject', headerName: 'Subject', width: 230},
+    { field: 'subject', headerName: 'Subject', width: 230,  type: 'link'},
     { field: 'created', headerName: 'Created On',type: 'date', width: 150 },
     { field: 'available', headerName: 'Available For', width: 150 },
     { field: 'display', headerName: 'Display To', width: 150 },
@@ -427,8 +493,6 @@ function Knowledge() {
     { id: 6, subject: 'How to assess admin page?', created: '2020/12/06', available: 'CS', display: 'Public', viewed: null, inserted: 5 },
     { id: 7, subject: 'How to assess admin page?', created: '2020/12/07', available: 'CS', display: 'Public', viewed: 50, inserted: 6 },
   ];
-
-
 
 
 
@@ -828,28 +892,53 @@ function Knowledge() {
                     <Table aria-label="simple table">
                       <TableHead>
                         <TableRow>
-                          <TableCell className="categories"><Typography >Categories and Folders</Typography></TableCell>
+                          <TableCell className="categories"><Typography ><b>Categories and Folders</b></Typography></TableCell>
+                          <TableCell className="categories">
+                          </TableCell>
                         </TableRow>
                         <TableRow>
-                          
-                          <Typography className="dragdrop">Drag&Drop으로 폴더를 이동할 수 있습니다<InfoIcon style={StyleApply.InfoIcon}/></Typography>
+                          <Typography className="dragdrop" >Drag&Drop으로 폴더를 이동할 수 있습니다<InfoIcon style={StyleApply.InfoIcon}/></Typography>
                         </TableRow>
                       </TableHead>
-                      <TableBody>
-                        <TreeView className="Icon"
-                          aria-label="file system navigator"
-                          defaultCollapseIcon={<RemoveIcon className="defaultCollapseIcon"/>}
-                          defaultExpandIcon={<AddIcon  className="defaultExpandIcon"/>}
+                      <TableBody >
+                        <TreeView
+                            defaultCollapseIcon={<ArrowDropDownIcon />}
+                            defaultExpandIcon={<ArrowRightIcon />}
+                            defaultEndIcon={<div style={{ width: 50 }} />}
+                            sx={{ height: 'auto', overflowY: 'auto' }}
                           >
-                          <TreeItem nodeId="1" label="Category 1">
-                            <TreeItem nodeId="a" label="Folder 1.1" />
-                            <TreeItem nodeId="b" label="Folder 2.1" />
-                          </TreeItem>
-                          <br/>
-                          <TreeItem nodeId="2" label="Category 2(10)">
-                          <TreeItem nodeId="2a" label="Folder 2.1" />
-                            <TreeItem nodeId="2b" label="Folder 2.2" />
-                          </TreeItem>
+                          <StyledTreeItem nodeId="1" labelText="Category 1" labelIcon={Label}>
+                            <StyledTreeItem
+                              nodeId="a"
+                              labelText="Folder 1.1"
+                              labelIcon={FolderOpenIcon}
+                              color="#1a73e8"
+                              bgColor="#e8f0fe"
+                            />
+                            <StyledTreeItem
+                              nodeId="b"
+                              labelText="Folder 2.1"
+                              labelIcon={FolderOpenIcon}
+                              color="#e3742f"
+                              bgColor="#fcefe3"
+                            />
+                          </StyledTreeItem>
+                          <StyledTreeItem nodeId="2" labelText="Category 2(10)" labelIcon={Label}>
+                            <StyledTreeItem
+                              nodeId="2a"
+                              labelText="Folder 2.1"
+                              labelIcon={FolderOpenIcon}
+                              color="#1a73e8"
+                              bgColor="#e8f0fe"
+                            />
+                            <StyledTreeItem
+                              nodeId="2b"
+                              labelText="Folder 2.2"
+                              labelIcon={FolderOpenIcon}
+                              color="#e3742f"
+                              bgColor="#fcefe3"
+                            />
+                          </StyledTreeItem>
                         </TreeView>
                       </TableBody>
                     </Table>
@@ -860,70 +949,70 @@ function Knowledge() {
                   onClick={handleClickOpen('paper')}
                   />
                   </Tooltip>
-                <Dialog
-                  fullWidth={fullWidth}
-                  open={OpenDialog}
-                  onClose={handleCloseDialog}
-                  scroll={scroll}
-                  aria-labelledby="scroll-dialog-title"
-                  aria-describedby="scroll-dialog-description"
-                >
-                  <DialogTitle id="scroll-dialog-title">Add New Category</DialogTitle>
-                  <DialogContent dividers={scroll === 'paper'}>
-                    <DialogContentText
-                      id="scroll-dialog-description"
-                      ref={descriptionElementRef}
-                      tabIndex={-1}
-                    >
-                      <Box >
-                          <FormLabel component="legend">Name<span className="asterisk" >*</span></FormLabel>
-                          <TextField fullWidth/>
-                      </Box>
-                      <br/>
-                      <Box >
-                          <FormLabel component="legend">Description</FormLabel>
-                          <TextField fullWidth/>
-                      </Box>
-                      <br/>
-                      <Grid container >
-                          <Grid  xs={12} display="flex" >
-                            <FormControl>
-                              <FormLabel id="demo-radio-buttons-group-label">Display to</FormLabel>
-                              <RadioGroup
-                                column
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={value2}
-                                onChange={handleChange2}
-                              >
-                                <FormControlLabel 
-                                  value="Public" 
-                                  control={<Radio />} 
-                                  label="Public" />
-                                <FormControlLabel 
-                                  value="Private" 
-                                  control={<Radio />} 
-                                  label="Private" />
-                              </RadioGroup>
-                            </FormControl>
-                          </Grid>
-                        </Grid>
+                  <Dialog
+                    fullWidth={fullWidth}
+                    open={OpenDialog}
+                    onClose={handleCloseDialog}
+                    scroll={scroll}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                  >
+                    <DialogTitle id="scroll-dialog-title">Add New Category</DialogTitle>
+                    <DialogContent dividers={scroll === 'paper'}>
+                      <DialogContentText
+                        id="scroll-dialog-description"
+                        ref={descriptionElementRef}
+                        tabIndex={-1}
+                      >
+                        <Box >
+                            <FormLabel component="legend">Name<span className="asterisk" >*</span></FormLabel>
+                            <TextField fullWidth/>
+                        </Box>
                         <br/>
-                      <Grid container >
-                          <Grid  xs={12} display="flex" >
-                            <FormControl component="fieldset" variant="standard">
-                              <FormLabel component="legend">Active</FormLabel>
-                              <Switch checked={checked} onChange={handleChangeActive} inputProps={{ 'aria-label': 'controlled' }}/>
-                            </FormControl>
+                        <Box >
+                            <FormLabel component="legend">Description</FormLabel>
+                            <TextField fullWidth/>
+                        </Box>
+                        <br/>
+                        <Grid container >
+                            <Grid  xs={12} display="flex" >
+                              <FormControl>
+                                <FormLabel id="demo-radio-buttons-group-label">Display to</FormLabel>
+                                <RadioGroup
+                                  column
+                                  aria-labelledby="demo-controlled-radio-buttons-group"
+                                  name="controlled-radio-buttons-group"
+                                  value={value2}
+                                  onChange={handleChange2}
+                                >
+                                  <FormControlLabel 
+                                    value="Public" 
+                                    control={<Radio />} 
+                                    label="Public" />
+                                  <FormControlLabel 
+                                    value="Private" 
+                                    control={<Radio />} 
+                                    label="Private" />
+                                </RadioGroup>
+                              </FormControl>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleCloseDialog}>Cancel</Button>
-                    <Button onClick={handleCloseDialog}>Save</Button>
-                  </DialogActions>
-                </Dialog>
+                          <br/>
+                        <Grid container >
+                            <Grid  xs={12} display="flex" >
+                              <FormControl component="fieldset" variant="standard">
+                                <FormLabel component="legend">Active</FormLabel>
+                                <Switch checked={checked} onChange={handleChangeActive} inputProps={{ 'aria-label': 'controlled' }}/>
+                              </FormControl>
+                            </Grid>
+                          </Grid>
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={handleCloseDialog}>Cancel</Button>
+                      <Button onClick={handleCloseDialog}>Save</Button>
+                    </DialogActions>
+                  </Dialog>
                           
                 </Grid>
                 <Grid  xs={0.3} ></Grid>
@@ -984,7 +1073,7 @@ const StyleApply = {
     },
     InfoIcon:{
       color: "black",
-      paddingTop: 0,
+      paddingTop: 5,
     },
     Hanbiro:{
       color: "#FFF3E0",

@@ -7,6 +7,7 @@
 
 .menutopbar{
     background-color: #131619;
+    height: 77px;
 }
 
 
@@ -57,14 +58,16 @@
 
 .AddIcon{
     margin-top: 2px;
-    border: solid #E1E5ED 1px;
+    border: solid #007BFF 1px;
     width: 45px!important;
     height: 40px!important;
     border-radius: 6px;
     padding: 5px;
-    background: #007BFF;
     color: white;
+    background: #007BFF;
 }
+
+
 
 .CachedIcon,
 .BorderAllIcon,
@@ -91,14 +94,14 @@
 }
 
 .dragdrop{
-    height: 50px;
+    height: auto;
     width: auto;
-    line-height: 2.0;
-    padding-left: 10px;
+    padding-left: 20px;
     color: black;
     background: #D1ECF1;
     border-radius: 12px;
     padding-top: 8px;
+    padding-bottom: 10px;
     margin: 24px!important;
 }
 
@@ -113,29 +116,25 @@
 .category{
     width: 25px!important;
     height: 25px!important;
-    margin-left: 10px;
+    margin-left: 35px;
 }
 
-.defaultCollapseIcon{
-    width: 25px!important;
-    height: 25px!important;
-    border: solid 1px black;
-    margin-right: 5px;
+.category:hover{
+    color: white;
+    background: #007BFF;
+    cursor: pointer;
 }
+
 
 .defaultExpandIcon{
-    width: 25px!important;
-    height: 25px!important;
-    border: solid 1px black;
-    margin: 0 5px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .Icon{
-    margin: 5px;
+    margin-left: 10px;
 }
 
-
-.SwipeableDrawer{
-    color: #007BFF;
-    z-index: 10000000000;
+.category1{
+    margin-left: 10px;
 }
