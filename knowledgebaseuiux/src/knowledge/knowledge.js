@@ -83,6 +83,7 @@ import Label from '@mui/icons-material/Label';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import Link from '@mui/material/Link';
 
 
 
@@ -457,9 +458,17 @@ function Knowledge() {
 
   const columns = [
     { field: 'id', headerName: 'No', width: 20},
-    { field: 'subject', headerName: 'Subject', width: 230,  type: 'link'},
+    { field: 'subject', headerName: 'Subject', width: 230,
+    renderCell: (params) => (
+              <Link
+                href="#"
+              >
+                {params.row.subject}
+              </Link>
+          ),
+    },
     { field: 'created', headerName: 'Created On',type: 'date', width: 150 },
-    { field: 'available', headerName: 'Available For', width: 150 },
+    { field: 'available', headerName: 'Available For', width: 150},
     { field: 'display', headerName: 'Display To', width: 150 },
     {
       field: 'viewed',
@@ -478,8 +487,11 @@ function Knowledge() {
       field: 'active',
       headerName: 'Active',
       width: 100,
-      type: 'boolean',
-      editable: true
+      renderCell: () => {
+        return (
+          <Switch />
+        );
+      }
     },
 
   ];
@@ -496,8 +508,6 @@ function Knowledge() {
 
 
 
-
-  
 
   return (
     <Box sx={{ display: 'flex' }} >
@@ -516,82 +526,47 @@ function Knowledge() {
           >
             <MenuIcon className="menuicon1"/>
           </IconButton>
-          <Box sx={{ flexGrow: 1, p: 1 }} >
-            <Grid container alignItems="center" >
-            <Grid>
-              <Item>
+          <Box  sx={{ flexGrow: 1}}>
+            <Grid container >
+              <Grid  xs={4} display="flex" className="leftcorner">
                 <Typography color="black" fontSize="16pt" fontWeight="500" noWrap component="div">
                 Customer Name
                 </Typography>
-              </Item>
-            </Grid>
-            <Grid  >
-              <Item>
                 <Tooltip title="New" arrow TransitionComponent={Zoom}>
                   <Fab size="small" color="primary" aria-label="add">
                   <AddIcon />
                   </Fab>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid  >
-              <Item>
                 <Tooltip title="Recent" arrow TransitionComponent={Zoom}>
                   <HistoryIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid   >
-              <Item>
                 <Tooltip title="Search" arrow TransitionComponent={Zoom}>
                   <SearchIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
-          </Grid>
-          </Box>
-          <Box  sx={{ display: 'flex' }}>
-            <Grid container>
-            <Grid>
-              <Item>
+
+              </Grid>
+
+              <Grid  xs={8} display="flex" className="rightcorner" >
                 <Tooltip title="Notification" arrow TransitionComponent={Zoom}>
                   <Badge badgeContent={4} color="warning">
                       <NotificationsNoneIcon color="action"/>
                   </Badge>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid  > 
-              <Item>
                 <Tooltip title="Setting" arrow TransitionComponent={Zoom}>
                   <SettingsIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid  >
-              <Item>
                 <Tooltip title="Help" arrow TransitionComponent={Zoom}>
                     <HelpOutlineIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid   >
-              <Item>
                 <Tooltip title="User" arrow TransitionComponent={Zoom}>
                     <AccountCircleIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
-            <Grid   >
-              <Item className="appear7">
                 <Tooltip title="Logout" arrow TransitionComponent={Zoom}>
                     <LogoutIcon style={StyleApply.MenuIcon}/>
                 </Tooltip>
-              </Item>
-            </Grid>
+              </Grid>
             </Grid>
           </Box>
-
         </Toolbar>
         
       </AppBar>
@@ -651,7 +626,7 @@ function Knowledge() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <br/>
         <DrawerHeader />
-          <Box  sx={{ flexGrow: 1,}}>
+          <Box  sx={{ flexGrow: 1}}>
             <Grid container >
               <Grid  xs={4} display="flex" className="leftcorner">
                 <StarIcon className="StarIcon"/>
@@ -1017,19 +992,18 @@ function Knowledge() {
                 </Grid>
                 <Grid  xs={0.3} ></Grid>
                 <Grid xs={8} display="flex" >
-                <div style={{ height: 400, width: '100%' }}>
-                  <DataGrid 
-                    rows={rows}
-                    columns={columns}
-                    pageSize={5}
-                    rowsPerPageOptions={[2]}
-                    checkboxSelection
-                    components={{
-                      Pagination: CustomPagination,
-                    }}
-                    
-                  />
-                </div>
+                  <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid 
+                      rows={rows}
+                      columns={columns}
+                      pageSize={5}
+                      rowsPerPageOptions={[2]}
+                      checkboxSelection
+                      components={{
+                        Pagination: CustomPagination,
+                      }}
+                    />
+                  </div>
                 </Grid>
             </Grid>
               

@@ -7,7 +7,7 @@
 
 .menutopbar{
     background-color: #131619;
-    height: 77px;
+    height: 68px;
 }
 
 
@@ -27,14 +27,16 @@
 .rightcorner{
     display: flex;
     justify-content: flex-end;
-    column-gap: 10px;
+    align-items: center;
+    column-gap: 20px;
     padding-right: 20px;
 }
 
 
 .leftcorner{
     display: flex;
-    column-gap: 10px;
+    align-items: center;
+    column-gap: 20px;
     margin-top: 05px;
 }
 
